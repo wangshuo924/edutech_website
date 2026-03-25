@@ -8,7 +8,7 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
-        /* === 核心排版与色彩系统 === */
+        /* === 1. 核心排版与色彩系统 === */
         :root { 
             --primary: #00f2fe; 
             --secondary: #4facfe; 
@@ -24,16 +24,14 @@
             background-color: var(--bg-dark); 
             color: var(--text-main); 
             line-height: 1.8; 
-            letter-spacing: 0.5px; /* 增加字间距，提升阅读呼吸感 */
+            letter-spacing: 0.5px; 
             overflow-x: hidden; 
             scroll-behavior: smooth; /* 点击导航平滑滚动 */
         }
         
-        /* === 首屏炫酷背景 === */
+        /* === 2. 首屏炫酷背景 === */
         .hero-section {
-            /* 🖼️ 【替换图片 1】：首屏全局背景图 
-               建议找一张深色调、有科技感的宽图。放在文件夹里，把下面的 url 改成你的图片名，例如 url('bg-tech.jpg')
-            */
+            /* 🖼️ 【替换图片 1】：首屏全局背景图 (建议找一张深色调、有科技感的宽图) */
             background-image: linear-gradient(to bottom, rgba(10, 12, 16, 0.8), rgba(10, 12, 16, 1)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920');
             background-size: cover; 
             background-position: center; 
@@ -57,7 +55,7 @@
         
         .hero-section p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; text-align: center; }
 
-        /* === 导航栏排版 === */
+        /* === 3. 导航栏排版 === */
         .nav { margin-top: 40px; display: flex; gap: 30px; }
         .nav a { 
             color: var(--text-main); 
@@ -70,7 +68,7 @@
         }
         .nav a:hover { color: var(--primary); border-bottom-color: var(--primary); }
 
-        /* === 内容区块排版 === */
+        /* === 4. 内容区块与通用标题 === */
         .content-section { max-width: 1100px; margin: 0 auto; padding: 100px 20px; }
         .section-title { 
             font-size: 2.5rem; 
@@ -89,12 +87,24 @@
             border-radius: 2px; 
         }
 
-        /* === 毛玻璃质感卡片 === */
+        /* === 5. 左右图文交替排版 === */
+        .showcase-item { display: flex; align-items: center; gap: 50px; margin-bottom: 80px; }
+        .showcase-item:nth-child(even) { flex-direction: row-reverse; } 
+        
+        .showcase-img-wrapper { flex: 1; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .showcase-img-wrapper img { width: 100%; height: auto; display: block; transition: transform 0.5s; }
+        .showcase-img-wrapper:hover img { transform: scale(1.05); } 
+        
+        .showcase-text { flex: 1; }
+        .showcase-text h3 { font-size: 2rem; color: #fff; margin-bottom: 20px; }
+        .showcase-text p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 15px; }
+
+        /* === 6. 毛玻璃质感卡片排版 === */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
         
         .glass-card {
             background: rgba(255, 255, 255, 0.03); 
-            backdrop-filter: blur(10px); /* 毛玻璃特效 */
+            backdrop-filter: blur(10px); 
             border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 40px 30px; 
             border-radius: 20px; 
@@ -106,25 +116,29 @@
             box-shadow: 0 15px 35px rgba(0, 242, 254, 0.1); 
         }
         .glass-card h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.5rem; }
-        .glass-card p { color: var(--text-muted); font-size: 1.05rem; }
+        .glass-card p { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 10px; }
+        .glass-card ul { padding-left: 20px; color: var(--text-muted); font-size: 1.05rem; }
+        .glass-card ul li { margin-bottom: 8px; }
 
-        /* === 左右图文交替排版 === */
-        .showcase-item { 
-            display: flex; 
-            align-items: center; 
-            gap: 50px; 
-            margin-bottom: 80px; 
+        /* === 7. 炫酷发光超链接按钮样式 === */
+        .glow-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 20px;
+            color: var(--primary);
+            text-decoration: none;
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
-        .showcase-item:nth-child(even) { flex-direction: row-reverse; } /* 偶数项图片在右 */
-        
-        .showcase-img-wrapper { flex: 1; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .showcase-img-wrapper img { width: 100%; height: auto; display: block; transition: transform 0.5s; }
-        .showcase-img-wrapper:hover img { transform: scale(1.05); } /* 鼠标悬停图片微放大 */
-        
-        .showcase-text { flex: 1; }
-        .showcase-text h3 { font-size: 2rem; color: #fff; margin-bottom: 20px; }
-        .showcase-text p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 15px; }
-
+        .glow-link:hover {
+            background: rgba(0, 242, 254, 0.15);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
+            color: #fff;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
@@ -135,7 +149,7 @@
         
         <div class="nav" data-aos="fade-up" data-aos-delay="500">
             <a href="#examples">前沿应用</a>
-            <a href="#thinking">计算思维与STEAM</a>
+            <a href="#thinking">底层思维与跨学科</a>
         </div>
     </div>
 
@@ -159,8 +173,8 @@
             </div>
             <div class="showcase-text">
                 <h3>三维交互与地理信息可视化</h3>
-                <p>传统的平面教材难以展现宏大的时空维度。通过 Web 前端技术（如 CSS 3D 或 WebGL）结合 JSON 数据驱动，我们可以开发出 3D 交互式的世界地图。</p>
-                <p>例如，将全球自然灾害数据实时投影在 3D 地球仪上，让学生通过旋转、缩放，直观感受到地理气候与人类生存环境的深刻联系，极大地提升了地理与科学课堂的沉浸感。</p>
+                <p>传统的平面教材难以展现宏大的时空维度。通过 Web 前端技术结合 JSON 数据驱动，我们可以开发出动态的 3D 交互地图。</p>
+                <p>例如，将全球自然灾害数据实时投影在 3D 地球仪上，让学生直观感受到地理气候与人类生存环境的深刻联系，提升沉浸感。</p>
             </div>
         </div>
     </div>
@@ -171,17 +185,25 @@
             
             <div class="glass-card" data-aos="flip-left" data-aos-delay="100">
                 <h3>计算思维的培养</h3>
-                <p>教育技术的终极目的不是教人使用软件，而是培养计算思维。让学生学会在面对复杂生活挑战时，能够进行问题拆解、模式识别、抽象提炼，并设计出如同算法般严谨的解决方案。</p>
+                <p>教育技术的终极目的不是教人使用软件，而是培养计算思维 (CT)。让学生学会在面对复杂挑战时，能够进行问题拆解和模式识别。</p>
+                <a href="https://baike.baidu.com/item/%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4/4689456" target="_blank" class="glow-link">
+                    什么是计算思维？
+                </a>
             </div>
             
             <div class="glass-card" data-aos="flip-left" data-aos-delay="200">
                 <h3>STEAM 教育的实践</h3>
-                <p>技术是打破学科孤岛的利器。在 STEAM 项目中，学生可能需要运用数学原理计算模型比例，用艺术审美进行外观设计，最后通过编程和工程技术将其变成可交互的实体或网页应用。</p>
+                <p>技术是打破学科孤岛的利器。在一个完整的 STEAM 项目中，学生通常需要：</p>
+                <ul>
+                    <li>运用数学原理计算模型比例</li>
+                    <li>用艺术审美进行外观设计</li>
+                    <li>通过编程将其变成可交互的应用</li>
+                </ul>
             </div>
             
             <div class="glass-card" data-aos="flip-left" data-aos-delay="300">
                 <h3>批判性教学法的延伸</h3>
-                <p>在拥抱技术的同时，我们也应引导学生反思技术背后的伦理、数字鸿沟等问题，培养他们在数字时代的媒介素养和独立思考能力。</p>
+                <p>在拥抱技术的同时，我们也应引导学生反思技术背后的伦理、算法偏见与数字鸿沟等问题，培养他们在数字时代的媒介素养和独立思考能力。</p>
             </div>
 
         </div>
@@ -189,11 +211,12 @@
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // 初始化动画
         AOS.init({
             duration: 1000, 
             easing: 'ease-out-cubic',
             once: true,
-            offset: 100 // 提前多少像素触发动画
+            offset: 100 
         });
     </script>
 
