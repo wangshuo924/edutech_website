@@ -3,46 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我眼中的教育技术 - 首页</title>
+    <title>我眼中的教育技术 - 前沿探索</title>
+    
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
-        body { font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif; line-height: 1.6; margin: 0 auto; max-width: 800px; padding: 20px; color: #333; }
-        header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
-        h1 { color: #4CAF50; }
-        .nav { text-align: center; margin-bottom: 20px; }
-        .nav a { margin: 0 15px; text-decoration: none; color: #0066cc; font-weight: bold; }
-        .content-box { background-color: #f9f9f9; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
-        img { max-width: 100%; height: auto; border-radius: 8px; margin-top: 10px; }
+        /* === 核心排版与色彩系统 === */
+        :root { 
+            --primary: #00f2fe; 
+            --secondary: #4facfe; 
+            --bg-dark: #0a0c10; 
+            --text-main: #e2e8f0; 
+            --text-muted: #94a3b8;
+        }
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif; 
+            background-color: var(--bg-dark); 
+            color: var(--text-main); 
+            line-height: 1.8; 
+            letter-spacing: 0.5px; /* 增加字间距，提升阅读呼吸感 */
+            overflow-x: hidden; 
+            scroll-behavior: smooth; /* 点击导航平滑滚动 */
+        }
+        
+        /* === 首屏炫酷背景 === */
+        .hero-section {
+            /* 🖼️ 【替换图片 1】：首屏全局背景图 
+               建议找一张深色调、有科技感的宽图。放在文件夹里，把下面的 url 改成你的图片名，例如 url('bg-tech.jpg')
+            */
+            background-image: linear-gradient(to bottom, rgba(10, 12, 16, 0.8), rgba(10, 12, 16, 1)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1920');
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+            min-height: 100vh; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+        }
+
+        .hero-section h1 { 
+            font-size: 4rem; 
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; 
+            margin-bottom: 20px; 
+            letter-spacing: 2px;
+        }
+        
+        .hero-section p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; text-align: center; }
+
+        /* === 导航栏排版 === */
+        .nav { margin-top: 40px; display: flex; gap: 30px; }
+        .nav a { 
+            color: var(--text-main); 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 1.1rem;
+            padding-bottom: 5px; 
+            border-bottom: 2px solid transparent; 
+            transition: all 0.3s ease; 
+        }
+        .nav a:hover { color: var(--primary); border-bottom-color: var(--primary); }
+
+        /* === 内容区块排版 === */
+        .content-section { max-width: 1100px; margin: 0 auto; padding: 100px 20px; }
+        .section-title { 
+            font-size: 2.5rem; 
+            text-align: center; 
+            margin-bottom: 70px; 
+            color: #fff; 
+            position: relative; 
+        }
+        .section-title::after { 
+            content: ''; 
+            display: block; 
+            width: 80px; 
+            height: 4px; 
+            background: linear-gradient(to right, var(--primary), var(--secondary)); 
+            margin: 20px auto 0; 
+            border-radius: 2px; 
+        }
+
+        /* === 毛玻璃质感卡片 === */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(10px); /* 毛玻璃特效 */
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 40px 30px; 
+            border-radius: 20px; 
+            transition: all 0.4s ease; 
+        }
+        .glass-card:hover { 
+            transform: translateY(-10px); 
+            border-color: rgba(0, 242, 254, 0.3); 
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.1); 
+        }
+        .glass-card h3 { color: var(--primary); margin-bottom: 15px; font-size: 1.5rem; }
+        .glass-card p { color: var(--text-muted); font-size: 1.05rem; }
+
+        /* === 左右图文交替排版 === */
+        .showcase-item { 
+            display: flex; 
+            align-items: center; 
+            gap: 50px; 
+            margin-bottom: 80px; 
+        }
+        .showcase-item:nth-child(even) { flex-direction: row-reverse; } /* 偶数项图片在右 */
+        
+        .showcase-img-wrapper { flex: 1; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .showcase-img-wrapper img { width: 100%; height: auto; display: block; transition: transform 0.5s; }
+        .showcase-img-wrapper:hover img { transform: scale(1.05); } /* 鼠标悬停图片微放大 */
+        
+        .showcase-text { flex: 1; }
+        .showcase-text h3 { font-size: 2rem; color: #fff; margin-bottom: 20px; }
+        .showcase-text p { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 15px; }
+
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>我眼中的教育技术</h1>
-        <p>重塑学习体验，赋能未来教育</p>
-    </header>
-
-    <div class="nav">
-        <a href="index.html">网站首页</a> | 
-        <a href="details.html">前沿探索：AI与计算思维</a>
-    </div>
-
-    <div class="content-box">
-        <h2>什么是教育技术？</h2>
-        <p>在我眼中，教育技术不仅仅是把传统的黑板变成电子屏幕，或者把纸质课本变成PDF。它是一门跨学科的科学，致力于通过设计、开发、利用、管理和评价那些促进学习的资源与过程，来改善人类的绩效。</p>
-        <p>它是连接教育学理论（如建构主义、批判性教学法）与具体教学实践的桥梁。</p>
+    <div class="hero-section">
+        <h1 data-aos="zoom-in" data-aos-duration="1200">我眼中的教育技术</h1>
+        <p data-aos="fade-up" data-aos-delay="300">融合前沿科技，重塑学习边界，赋能未来教育者与学习者。</p>
         
-        <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&q=80&w=800" alt="教育与技术结合的象征图">
+        <div class="nav" data-aos="fade-up" data-aos-delay="500">
+            <a href="#examples">前沿应用</a>
+            <a href="#thinking">计算思维与STEAM</a>
+        </div>
     </div>
 
-    <div class="content-box">
-        <h2>教育技术的核心价值</h2>
-        <ul>
-            <li><strong>个性化学习：</strong> 利用数据分析，为不同学习者提供定制化的学习路径。</li>
-            <li><strong>资源普惠：</strong> 打破地域限制，让优质教育资源触达每一个角落。</li>
-            <li><strong>沉浸式体验：</strong> 通过VR/AR等技术，将抽象的知识具象化、场景化。</li>
-            <li><strong>效率提升：</strong> 优化教学设计，减轻教师重复性工作负担。</li>
-        </ul>
+    <div id="examples" class="content-section">
+        <h2 class="section-title" data-aos="fade-up">技术如何重塑课堂</h2>
+        
+        <div class="showcase-item" data-aos="fade-right">
+            <div class="showcase-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&q=80&w=800" alt="AI智能辅导">
+            </div>
+            <div class="showcase-text">
+                <h3>生成式人工智能的深度介入</h3>
+                <p>AI 不再仅仅是检索工具，它正在成为学生的“苏格拉底式”导师。</p>
+                <p>在编程或复杂理科学习中，AI 可以根据学生的错误代码或思路盲区，提供针对性的启发，而不是直接给出答案，从而保护并激发学生的探究欲。</p>
+            </div>
+        </div>
+
+        <div class="showcase-item" data-aos="fade-left">
+            <div class="showcase-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800" alt="3D交互地图">
+            </div>
+            <div class="showcase-text">
+                <h3>三维交互与地理信息可视化</h3>
+                <p>传统的平面教材难以展现宏大的时空维度。通过 Web 前端技术（如 CSS 3D 或 WebGL）结合 JSON 数据驱动，我们可以开发出 3D 交互式的世界地图。</p>
+                <p>例如，将全球自然灾害数据实时投影在 3D 地球仪上，让学生通过旋转、缩放，直观感受到地理气候与人类生存环境的深刻联系，极大地提升了地理与科学课堂的沉浸感。</p>
+            </div>
+        </div>
     </div>
+
+    <div id="thinking" class="content-section" style="background-color: #0d1117;">
+        <h2 class="section-title" data-aos="fade-up">底层思维与跨学科</h2>
+        <div class="grid-container">
+            
+            <div class="glass-card" data-aos="flip-left" data-aos-delay="100">
+                <h3>计算思维的培养</h3>
+                <p>教育技术的终极目的不是教人使用软件，而是培养计算思维。让学生学会在面对复杂生活挑战时，能够进行问题拆解、模式识别、抽象提炼，并设计出如同算法般严谨的解决方案。</p>
+            </div>
+            
+            <div class="glass-card" data-aos="flip-left" data-aos-delay="200">
+                <h3>STEAM 教育的实践</h3>
+                <p>技术是打破学科孤岛的利器。在 STEAM 项目中，学生可能需要运用数学原理计算模型比例，用艺术审美进行外观设计，最后通过编程和工程技术将其变成可交互的实体或网页应用。</p>
+            </div>
+            
+            <div class="glass-card" data-aos="flip-left" data-aos-delay="300">
+                <h3>批判性教学法的延伸</h3>
+                <p>在拥抱技术的同时，我们也应引导学生反思技术背后的伦理、数字鸿沟等问题，培养他们在数字时代的媒介素养和独立思考能力。</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, 
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 100 // 提前多少像素触发动画
+        });
+    </script>
 
 </body>
 </html>
